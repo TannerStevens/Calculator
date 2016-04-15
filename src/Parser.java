@@ -29,7 +29,7 @@ public class Parser {
 		return result;
 	}
 	public String translate(String eq){
-		if(isOperator(eq.charAt(eq.length()-1)))
+		if(eq.charAt(eq.length()-1)!=')' && isOperator(eq.charAt(eq.length()-1)))
 			return eq; //Already Postfix
 		
 		Stack<Character> operators = new Stack<Character>();
@@ -37,8 +37,13 @@ public class Parser {
 		for(int i=0;i<eq.length();i++){
 			char c = eq.charAt(i);
 			if(isOperator(c)){
+				if(operators.empty()){
+					operators.push(c);
+					continue;
+				}
+				
 				char sTop = operators.peek();
-				if(operators.empty() || sTop=='(') 
+				if(sTop=='(') 
 					operators.push(c);
 				else if(c=='(')
 					operators.push(c);
@@ -52,8 +57,13 @@ public class Parser {
 				}
 				else{
 					while(true){
+						if(operators.empty()){
+							operators.push(c);
+							break;
+						}
+						
 						sTop = operators.peek();
-						if(opPrecedence.get(c)>opPrecedence.get(sTop)){
+						if(opPrecedence.get(c)<opPrecedence.get(sTop)){
 							operators.push(c);
 							break;
 						}
@@ -68,13 +78,17 @@ public class Parser {
 							}
 							break;
 						}
-						else if(opPrecedence.get(c)<opPrecedence.get(sTop)){
+						else if(opPrecedence.get(c)>opPrecedence.get(sTop)){
 							outStr+=operators.pop();
 						}
 					}
 				}
 			}
 			else outStr+=c;
+		}
+		
+		while(!operators.empty()){
+			outStr+=operators.pop();
 		}
 		return outStr;
 	}
