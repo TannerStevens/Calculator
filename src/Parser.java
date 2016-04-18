@@ -51,7 +51,7 @@ public class Parser {
 					char tempC;
 					tempC = operators.pop();
 					while (tempC!='('){
-						outStr+=tempC;
+						outStr+=" "+tempC;
 						tempC = operators.pop();
 					}
 				}
@@ -73,24 +73,34 @@ public class Parser {
 								operators.push(c);
 							}
 							else{//Left Associative
-								outStr+=operators.pop();
+								outStr+=" "+operators.pop();
 								operators.push(c);
 							}
 							break;
 						}
 						else if(opPrecedence.get(c)>opPrecedence.get(sTop)){
-							outStr+=operators.pop();
+							outStr+=" "+operators.pop();
 						}
 					}
 				}
 			}
-			else outStr+=c;
+			else{
+				outStr+=" "+c;
+				for(int j=i+1;j<eq.length();j++){
+					char tC = eq.charAt(j);
+					if(!isOperator(tC)) {
+						outStr+=tC;
+						i++;
+					}
+					else break;
+				}
+			}
 		}
 		
 		while(!operators.empty()){
-			outStr+=operators.pop();
+			outStr+=" "+operators.pop();
 		}
-		return outStr;
+		return outStr.substring(1);
 	}
 	public String[] parseFile(String fName){
 		return null;
