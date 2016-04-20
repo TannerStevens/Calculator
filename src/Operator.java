@@ -7,7 +7,9 @@ public enum Operator {
 	MULTIPLICATION ("*", 3),
 	DIVISION ("/", 3),
 	ADDITION ("+", 4),
-	SUBTRACTION ("-", 4);
+	SUBTRACTION ("-", 4),
+	L_PARENTHESIS ("(", 0),
+	R_PARENTHESIS (")", 0);
 	
 	private static final Map<String, Operator> operators;
 	static{
@@ -17,6 +19,8 @@ public enum Operator {
 		ops.put(Operator.DIVISION.symbol(), Operator.DIVISION);
 		ops.put(Operator.ADDITION.symbol(), Operator.ADDITION);
 		ops.put(Operator.SUBTRACTION.symbol(), Operator.SUBTRACTION);
+		ops.put(Operator.L_PARENTHESIS.symbol(), Operator.L_PARENTHESIS);
+		ops.put(Operator.R_PARENTHESIS.symbol(), Operator.R_PARENTHESIS);
 		operators = Collections.unmodifiableMap(ops);
 	}
 	

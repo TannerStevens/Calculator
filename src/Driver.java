@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-
-public class Driver {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-	}
-
-=======
 import java.util.HashMap;
 
 import javafx.application.Application;
@@ -150,11 +140,4 @@ public class Driver extends Application {
     		}
     	});
     }
-    
-    
-    
-    
-    
-    
->>>>>>> origin/master
 }
