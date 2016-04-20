@@ -7,7 +7,9 @@ public class Graph {
 	private int pSpacing;
 	
 	public Graph(){}
-	public void SetUp(String eq, int min, int max){}
+	public void SetUp(String eq, int min, int max){
+		
+	}
 	public void setPointSpacing(int gap){}
 	private void plotPoint(int y){}
 }
