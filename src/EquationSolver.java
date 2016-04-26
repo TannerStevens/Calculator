@@ -28,7 +28,20 @@ public class EquationSolver {
 			double x = eqStack.pop();
 			eqStack.push(x-y);
 		});
+		operators.put(Operator.SIN.symbol(), ()->{
+			eqStack.push(Math.sin(eqStack.pop()));
+		});
+		operators.put(Operator.COS.symbol(), ()->{
+			eqStack.push(Math.cos(eqStack.pop()));
+		});
+		operators.put(Operator.TAN.symbol(), ()->{
+			eqStack.push(Math.tan(eqStack.pop()));
+		});
+		operators.put(Operator.LOG.symbol(), ()->{
+			eqStack.push(Math.log10(eqStack.pop()));
+		});
 	}
+	
 	public double Solve(String eq){
 		String[] sEq = eq.split(" ");
 		for(int s=0;s<sEq.length;s++){
@@ -39,45 +52,5 @@ public class EquationSolver {
 		}
 		
 		return eqStack.pop();
-	}
-	
-		public static double Sin(double x, String ch) {
-		if(ch.equals("Sin") || ch.equals("sin")) {
-			double rad = Math.sin(Math.toRadians(x));
-			return rad;
-		}
-		else
-			System.out.print("write Sin or sin");
-			return 0;
-	}
-	
-	public static double Cos(double x, String ch) {
-		if(ch.equals("Cos") || ch.equals("cos")) {
-			double rad = Math.cos(Math.toRadians(x));
-			return rad;
-		}
-		else
-			System.out.print("write Cos or cos");
-			return 0;
-	}
-	
-	public static double Tan(double x, String ch) {
-		if(ch.equals("Tan") || ch.equals("tan")) {
-			double rad = Math.tan(Math.toRadians(x));
-			return rad;
-		}
-		else
-			System.out.print("write Tan or tan");
-			return 0;
-	}
-	
-	public static double Rad(double x) {
-			double rad = Math.toRadians(x);
-			return rad;
-	}
-	
-	public static double Log(double x) {
-		double rad = Math.log10(x);
-		return rad;
 	}
 }
