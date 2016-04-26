@@ -42,5 +42,22 @@ public class EquationSolverTest {
 		result = es.Solve("2 2 -");
 		assertEquals(result, 0, 0);
 	}
-
+	
+	@Test
+	public void testSin(){
+		result = es.Solve("25 sin");
+		assertEquals(result, Math.sin(25), 1);
+	}
+	
+	@Test
+	public void testCos(){
+		result = es.Solve("25 cos");
+		assertEquals(result, Math.cos(25), 1);
+	}
+	
+	@Test
+	public void testTan(){
+		result = es.Solve("25 tan");
+		assertEquals(result, Math.tan(25), 1);
+	}
 }

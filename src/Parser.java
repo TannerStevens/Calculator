@@ -85,18 +85,6 @@ public class Parser {
 		}
 		
 		return outStr.trim();
-			
-			/*if(Operator.isOperator(c)){
-				
-				}
-			}
-			else{
-				outStr+=" "+c;
-			}
-		}
-		
-		
-		return outStr.substring(1);*/
 	}
 	public String[] parseFile(String fName){
 		return null;
