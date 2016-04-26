@@ -35,5 +35,15 @@ public class ParserTest {
 		assertEquals("100 25 2 * -", p.translate("100-(25*2)"));
 		assertEquals("4 2 1 + * 6 10 / -", p.translate("4*(2+1)-6/10"));
 	}
+	
+	@Test
+	public void testMulticharacterOperators(){
+		assertEquals("25 sin", p.translate("sin(25)"));
+		assertEquals("25 sin 25 +", p.translate("sin(25)+25"));
+		assertEquals("25 cos", p.translate("cos(25)"));
+		assertEquals("25 tan", p.translate("tan(25)"));
+		assertEquals("25 log", p.translate("log(25)"));
+		assertEquals("25 sin 25 + 10 /", p.translate("(sin(25)+25)/10"));
+	}
 
 }
