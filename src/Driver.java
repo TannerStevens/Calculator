@@ -34,6 +34,9 @@ public class Driver extends Application {
         launch(args);
     }
     
+    /**
+     * Initialize components and call methods to construct main window.
+     */
     @Override
     public void start(Stage primaryStage) {
     	filename = "";
@@ -43,7 +46,6 @@ public class Driver extends Application {
         initTextFields();
         initLabels();
         initNumpadButtons();
-        
         scene = new Scene(grid, 300, 275);
         primaryStage.setScene(scene);
         primaryStage.show();
