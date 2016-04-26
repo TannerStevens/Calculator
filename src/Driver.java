@@ -163,17 +163,4 @@ public class Driver extends Application {
     		}
     	});
     }
-/* 
-    private void handleAccelerators(VBox layout) {
-    	layout.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-    		@Override
-    		public void handle(KeyEvent keyEvent) {
-    			Button activated = accelerators.get(keyEvent.getText());
-    			if(activated != null) {
-    				activated.fire();
-    			}
-    		}
-    	});
-    }
-*/
 }
