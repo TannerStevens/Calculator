@@ -25,7 +25,7 @@ public class Driver extends Application {
 		{"7", "8", "9", "+", "*", "sin"},
 		{"4", "5", "6", "-", "/", "cos"},
 		{"1", "2", "3", "(", ")", "tan"},
-		{"0", "clear", "=", ".", "^", "pi"}
+		{"0", "clear", "=", ".", "^", "log"}
 	};
 	
     public static void main(String[] args) {
@@ -119,7 +119,7 @@ public class Driver extends Application {
     
     /**
      * Create "=" button.
-     * Action: Pass equation to Parse/Equation Solver and display result.
+     * Action: Pass equation to Parser and EquationSolver then display result.
      * @param button
      */
     private void createEqualButton(Button button) {
@@ -127,7 +127,11 @@ public class Driver extends Application {
     	button.setOnAction(new EventHandler<ActionEvent>() {
     		@Override
     		public void handle(ActionEvent actionEvent) {
-    			//TODO: Pass equation to Parser/Equation Solver
+    			Parser parser = new Parser();
+    			EquationSolver esolver = new EquationSolver();
+    			String postfixEquation = parser.translate(equation);
+    			Double result = esolver.Solve(postfixEquation);
+    			equationTF.setText(result+ "");
     		}
     	});
     }
