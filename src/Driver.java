@@ -1,9 +1,5 @@
 import java.util.HashMap;
-
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,15 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
- 
+
 public class Driver extends Application {
 	
-	private String equation;
+	private String filename, equation;
 	private GridPane grid;
 	private Scene scene;
 	private TextField filenameTF, equationTF;
@@ -31,7 +25,7 @@ public class Driver extends Application {
 		{"7", "8", "9", "+", "*", "sin"},
 		{"4", "5", "6", "-", "/", "cos"},
 		{"1", "2", "3", "(", ")", "tan"},
-		{"0", ".", "^", "pi", "clear", "="}
+		{"0", "clear", "=", ".", "^", "pi"}
 	};
 	
     public static void main(String[] args) {
@@ -40,6 +34,7 @@ public class Driver extends Application {
     
     @Override
     public void start(Stage primaryStage) {
+    	filename = "";
     	equation = "";
         primaryStage.setTitle("Calculator");
         initGridPane();
@@ -55,15 +50,16 @@ public class Driver extends Application {
     private void initGridPane() {
     	grid = new GridPane();
     	grid.setAlignment(Pos.CENTER);
-    	grid.setHgap(10);
-    	grid.setVgap(10);
-    	grid.setPadding(new Insets(25, 25, 25, 25));
+    	grid.setHgap(2);
+    	grid.setVgap(2);
+    	grid.setPadding(new Insets(5));
     }
     
     private void initTextFields() {
     	filenameTF = new TextField();
     	equationTF = new TextField();
-    	//equationTF.setStyle("-fx-background-color: midnightblue;");
+    	//equationTF.setStyle("-fx-background-color: deepskyblue;"
+    	//		+ "-fx-text-fill: honeydew;");
     	grid.add(filenameTF, 0, 1);
     	grid.add(equationTF, 0, 3);
     }
@@ -73,8 +69,6 @@ public class Driver extends Application {
     	equationL = new Label("Equation:");
     	grid.add(filenameL, 0, 0);
     	grid.add(equationL, 0, 2);
-    	
-    	
     }
     
     private void initNumpadButtons() {
@@ -87,12 +81,12 @@ public class Driver extends Application {
     			numpadButtons.getChildren().add(createButton(t));
     		}
     	}
+    	grid.add(numpadButtons, 0, 5);
     }
     
     private Button createButton(String s) {
     	Button button = new Button(s);
-    	button.setStyle("-fx-base: beige;");
-    	accelerators.put(s,  button);
+    	accelerators.put(s, button);
     	button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); 	
     	if(s.matches("[0-9]")) {
     		createNumButton(button);
@@ -101,34 +95,75 @@ public class Driver extends Application {
     	} else if(s.equals("clear")){
     		createClearButton(button);
     	} else
-    		createOperandButton(button);
+    		createOperatorButton(button);
     	
     	return button;
     }
     
+    /**
+     * Create number operand button.
+     * Action: Append equation with number pressed.
+     * @param button
+     */
     private void createNumButton(Button button) {
-    	//TODO
-    }
-    
-    private void createEqualButton(Button button) {
-    	//TODO
-    }
-    
-    private void createClearButton(Button button) {
-    	//TODO
-    }
-    
-    private void createOperandButton(Button button) {
     	button.setStyle("-fx-base: lightgray;");
+    	button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				equation += button.getText();
+				equationTF.setText(equation);
+			}
+    		
+    	});
+    }
+    
+    /**
+     * Create "=" button.
+     * Action: Pass equation to Parse/Equation Solver and display result.
+     * @param button
+     */
+    private void createEqualButton(Button button) {
+    	button.setStyle("-fx-base: honeydew;");
     	button.setOnAction(new EventHandler<ActionEvent>() {
     		@Override
     		public void handle(ActionEvent actionEvent) {
-    			equation += " " + button.getText();
-    			equationTF.setText(equation);
+    			//TODO: Pass equation to Parser/Equation Solver
     		}
     	});
     }
     
+    /**
+     * Create "clear" button.
+     * Action: Set equation to empty string.
+     * @param button
+     */
+    private void createClearButton(Button button) {
+    	button.setStyle("-fx-base: honeydew;");
+    	button.setOnAction(new EventHandler<ActionEvent>() {
+    		@Override
+    		public void handle(ActionEvent actionEvent) {
+    			equation = "";
+    	    	equationTF.setText(equation);
+    		}
+    	});
+    }
+    
+    /**
+     * Create operator button.
+     * Action: Append equation with operator sign pressed.
+     * @param button
+     */
+    private void createOperatorButton(Button button) {
+    	button.setStyle("-fx-base: lightslategrey;");
+    	button.setOnAction(new EventHandler<ActionEvent>() {
+    		@Override
+    		public void handle(ActionEvent actionEvent) {
+    			equation += button.getText();
+    			equationTF.setText(equation);
+    		}
+    	});
+    }
+/* 
     private void handleAccelerators(VBox layout) {
     	layout.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
     		@Override
@@ -140,4 +175,5 @@ public class Driver extends Application {
     		}
     	});
     }
+*/
 }
