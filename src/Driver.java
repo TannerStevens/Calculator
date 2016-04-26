@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class Driver extends Application {
@@ -58,8 +60,7 @@ public class Driver extends Application {
     private void initTextFields() {
     	filenameTF = new TextField();
     	equationTF = new TextField();
-    	//equationTF.setStyle("-fx-background-color: deepskyblue;"
-    	//		+ "-fx-text-fill: honeydew;");
+    	equationTF.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
     	grid.add(filenameTF, 0, 1);
     	grid.add(equationTF, 0, 3);
     }
@@ -84,6 +85,11 @@ public class Driver extends Application {
     	grid.add(numpadButtons, 0, 5);
     }
     
+    /**
+     * Create initial buttons for entering equation.
+     * @param s
+     * @return
+     */
     private Button createButton(String s) {
     	Button button = new Button(s);
     	accelerators.put(s, button);
@@ -128,10 +134,11 @@ public class Driver extends Application {
     		@Override
     		public void handle(ActionEvent actionEvent) {
     			Parser parser = new Parser();
-    			EquationSolver esolver = new EquationSolver();
-    			String postfixEquation = parser.translate(equation);
-    			Double result = esolver.Solve(postfixEquation);
-    			equationTF.setText(result+ "");
+    			EquationSolver eqSolver = new EquationSolver();
+    			String postfixEq = parser.translate(equation);
+    			Double result = eqSolver.Solve(postfixEq);
+    			equation = result + "";
+    			equationTF.setText(equation);
     		}
     	});
     }
