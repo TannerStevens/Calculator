@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -86,7 +92,14 @@ public class Parser {
 		
 		return outStr.trim();
 	}
-	public String[] parseFile(String fName){
-		return null;
+	public ArrayList<String> parseFile(File inputFile) throws IOException{
+		ArrayList<String> lineList = new ArrayList<String>();
+		BufferedReader br = new BufferedReader(new FileReader(inputFile));
+		String line = null;
+		while((line = br.readLine()) != null) {
+			lineList.add(line);
+		}
+		br.close();
+		return lineList;
 	}
 }

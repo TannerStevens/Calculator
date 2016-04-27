@@ -1,4 +1,9 @@
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,15 +17,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class Driver extends Application {
 	
-	private String filename, equation;
+	private String equation;
 	private GridPane grid;
 	private Scene scene;
-	private TextField filenameTF, equationTF;
-	private Label filenameL, equationL;
+	private TextField equationTF;
+	private Label equationL;
 	private TilePane numpadButtons;
 	private HashMap<String, Button> accelerators = new HashMap<>();
 	private String[][] numpadText = {
@@ -39,10 +45,10 @@ public class Driver extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-    	filename = "";
     	equation = "";
         primaryStage.setTitle("Calculator");
         initGridPane();
+        initFileChooser(primaryStage);
         initTextFields();
         initLabels();
         initNumpadButtons();
@@ -60,18 +66,68 @@ public class Driver extends Application {
     }
     
     private void initTextFields() {
-    	filenameTF = new TextField();
     	equationTF = new TextField();
     	equationTF.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
-    	grid.add(filenameTF, 0, 1);
-    	grid.add(equationTF, 0, 3);
+    	grid.add(equationTF, 0, 2);
+    }
+    
+    private void initFileChooser(Stage stage) {
+    	FileChooser fileChooser = new FileChooser();
+    	Button fileButton = new Button("Solve from File");
+    	fileButton.setOnAction(
+    			new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent arg0) {
+						List<File> inputFileList = fileChooser.showOpenMultipleDialog(stage);
+						if(inputFileList != null) {
+							try {
+								createOutputFile(inputFileList);
+							} catch (IOException e) {
+								System.out.println("Error with solving from file.");
+								e.printStackTrace();
+							}
+						}
+					}
+    			});
+    	grid.add(fileButton, 0, 0);
+    }
+    
+    /**
+     * Return Double solution to String equation using Parser and EquationSolver.
+     * @param equation
+     * @return solution
+     */
+    private Double solveEquation(String equation) {
+    	Double solution;
+		Parser parser = new Parser();
+		EquationSolver eqSolver = new EquationSolver();
+		String postfixEq = parser.translate(equation);
+		solution = eqSolver.Solve(postfixEq);
+		return solution;
+    }
+    
+    /**
+     * Create and write solutions to output file.
+     * @param inputFileList
+     * @throws IOException
+     */
+    private void createOutputFile(List<File> inputFileList) throws IOException {
+		Parser parser = new Parser();
+    	for(File inputFile : inputFileList) {
+			String outputFilename = "Solution-" + inputFile.getName();
+			PrintWriter writer = new PrintWriter(outputFilename, "UTF-8");
+			ArrayList<String> equations = parser.parseFile(inputFile);
+			//Solve equations and write results to output file
+			for(int i = 0; i < equations.size(); i++) {
+				writer.println(solveEquation(equations.get(i)));
+			}
+			writer.close();
+		}
     }
     
     private void initLabels() {
-    	filenameL = new Label("File name (Optional):");
     	equationL = new Label("Equation:");
-    	grid.add(filenameL, 0, 0);
-    	grid.add(equationL, 0, 2);
+    	grid.add(equationL, 0, 1);
     }
     
     private void initNumpadButtons() {
@@ -84,7 +140,7 @@ public class Driver extends Application {
     			numpadButtons.getChildren().add(createButton(t));
     		}
     	}
-    	grid.add(numpadButtons, 0, 5);
+    	grid.add(numpadButtons, 0, 3);
     }
     
     /**
@@ -135,11 +191,7 @@ public class Driver extends Application {
     	button.setOnAction(new EventHandler<ActionEvent>() {
     		@Override
     		public void handle(ActionEvent actionEvent) {
-    			Parser parser = new Parser();
-    			EquationSolver eqSolver = new EquationSolver();
-    			String postfixEq = parser.translate(equation);
-    			Double result = eqSolver.Solve(postfixEq);
-    			equation = result + "";
+    			equation = solveEquation(equation) + "";
     			equationTF.setText(equation);
     		}
     	});
