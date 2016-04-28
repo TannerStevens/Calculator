@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
@@ -26,7 +27,7 @@ public class Driver extends Application {
 	private GridPane grid;
 	private Scene scene;
 	private TextField equationTF;
-	private Label equationL;
+	private Label equationL, fileStatusL;
 	private TilePane numpadButtons;
 	private HashMap<String, Button> accelerators = new HashMap<>();
 	private String[][] numpadText = {
@@ -52,7 +53,8 @@ public class Driver extends Application {
         initTextFields();
         initLabels();
         initNumpadButtons();
-        scene = new Scene(grid, 300, 275);
+        scene = new Scene(grid, 575, 300);
+        scene.getStylesheets().add("UIstylesheet.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -67,13 +69,14 @@ public class Driver extends Application {
     
     private void initTextFields() {
     	equationTF = new TextField();
-    	equationTF.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
-    	grid.add(equationTF, 0, 2);
+    	
+    	grid.add(equationTF, 0, 3);
     }
     
     private void initFileChooser(Stage stage) {
     	FileChooser fileChooser = new FileChooser();
-    	Button fileButton = new Button("Solve from File");
+    	Button fileButton = new Button("Solve from Files");
+    	fileButton.getStyleClass().add("file-button");
     	fileButton.setOnAction(
     			new EventHandler<ActionEvent>() {
 					@Override
@@ -82,8 +85,10 @@ public class Driver extends Application {
 						if(inputFileList != null) {
 							try {
 								createOutputFile(inputFileList);
+								fileStatusL.setText("Successful");
+								fileStatusL.setTextFill(Color.GREEN);
 							} catch (IOException e) {
-								System.out.println("Error with solving from file.");
+								System.out.println("Error solving from files");
 								e.printStackTrace();
 							}
 						}
@@ -126,8 +131,10 @@ public class Driver extends Application {
     }
     
     private void initLabels() {
+    	fileStatusL = new Label();
     	equationL = new Label("Equation:");
-    	grid.add(equationL, 0, 1);
+    	grid.add(fileStatusL, 0, 1);
+    	grid.add(equationL, 0, 2);
     }
     
     private void initNumpadButtons() {
@@ -140,7 +147,7 @@ public class Driver extends Application {
     			numpadButtons.getChildren().add(createButton(t));
     		}
     	}
-    	grid.add(numpadButtons, 0, 3);
+    	grid.add(numpadButtons, 0, 4);
     }
     
     /**
@@ -170,12 +177,13 @@ public class Driver extends Application {
      * @param button
      */
     private void createNumButton(Button button) {
-    	button.setStyle("-fx-base: lightgray;");
+    	button.getStyleClass().add("number-button");
     	button.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				equation += button.getText();
 				equationTF.setText(equation);
+    	    	fileStatusL.setText("");
 			}
     		
     	});
@@ -187,12 +195,13 @@ public class Driver extends Application {
      * @param button
      */
     private void createEqualButton(Button button) {
-    	button.setStyle("-fx-base: honeydew;");
+    	button.getStyleClass().add("grey-button");
     	button.setOnAction(new EventHandler<ActionEvent>() {
     		@Override
     		public void handle(ActionEvent actionEvent) {
     			equation = solveEquation(equation) + "";
     			equationTF.setText(equation);
+    	    	fileStatusL.setText("");
     		}
     	});
     }
@@ -203,12 +212,13 @@ public class Driver extends Application {
      * @param button
      */
     private void createClearButton(Button button) {
-    	button.setStyle("-fx-base: honeydew;");
+    	button.getStyleClass().add("grey-button");
     	button.setOnAction(new EventHandler<ActionEvent>() {
     		@Override
     		public void handle(ActionEvent actionEvent) {
     			equation = "";
     	    	equationTF.setText(equation);
+    	    	fileStatusL.setText("");
     		}
     	});
     }
@@ -219,12 +229,13 @@ public class Driver extends Application {
      * @param button
      */
     private void createOperatorButton(Button button) {
-    	button.setStyle("-fx-base: lightslategrey;");
+    	button.getStyleClass().add("operator-button");
     	button.setOnAction(new EventHandler<ActionEvent>() {
     		@Override
     		public void handle(ActionEvent actionEvent) {
     			equation += button.getText();
     			equationTF.setText(equation);
+    	    	fileStatusL.setText("");
     		}
     	});
     }

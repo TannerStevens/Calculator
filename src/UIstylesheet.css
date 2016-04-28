@@ -1,0 +1,97 @@
+.root{
+    -fx-font-size: 12pt;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New";
+    -fx-base: #ffffff;
+    -fx-background: #c0c0f0;
+}
+
+.file-button {
+    -fx-background-color:
+        linear-gradient(#00FFFF, #00CED1),
+        radial-gradient(center 50% -40%, radius 200%, #4FC1DD 45%, #1E90FF 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #2f2f4f;
+}
+
+.file-button:hover {
+    -fx-background-color:
+        linear-gradient(#00EEEE, #00BDB0),
+        radial-gradient(center 50% -40%, radius 200%, #3EB0CC 45%, #0D70EE 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #202040;
+}
+
+.number-button {
+    -fx-background-color: 
+        rgba(0,0,0,0.08),
+        linear-gradient(#5a61af, #51536d),
+        linear-gradient(#e4fbff 0%,#cee6fb 10%, #a5d3fb 50%, #88c6fb 51%, #d5faff 100%);
+    -fx-background-insets: 0 0 -1 0,0,1;
+    -fx-background-radius: 5,5,4;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: #242d35;
+    -fx-font-size: 14px;
+}
+
+.number-button:hover {
+    -fx-background-color: 
+        rgba(0,0,0,0.08),
+        linear-gradient(#4a619f, #41335d),
+        linear-gradient(#d4ebef 0%,#ced6eb 10%, #a5c3eb 50%, #78b6eb 51%, #c5eaef 100%);
+    -fx-background-insets: 0 0 -1 0,0,1;
+    -fx-background-radius: 5,5,4;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: #242d35;
+    -fx-font-size: 14px;
+}
+
+.operator-button {
+    -fx-background-color: 
+        rgba(0,0,0,0.08),
+        linear-gradient(#3a41a0, #313360),
+        linear-gradient(#c4dbd0 0%,#aec6d0 10%, #85b3f0 50%, #68a6f0 51%, #b5daf0 100%);
+    -fx-background-insets: 0 0 -1 0,0,1;
+    -fx-background-radius: 5,5,4;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: #242d35;
+    -fx-font-size: 14px;
+}
+
+.operator-button:hover {
+    -fx-background-color: 
+        rgba(0,0,0,0.08),
+        linear-gradient(#2a31a0, #212360),
+        linear-gradient(#b4cbd0 0%,#9eb6d0 10%, #75a3f0 50%, #5896f0 51%, #a5caf0 100%);
+    -fx-background-insets: 0 0 -1 0,0,1;
+    -fx-background-radius: 5,5,4;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: #242d35;
+    -fx-font-size: 14px;
+}
+
+.grey-button {
+    -fx-background-color: 
+        linear-gradient(#f2f2f2, #d6d6d6),
+        linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),
+        linear-gradient(#dddddd 0%, #f6f6f6 50%);
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+.grey-button:hover {
+    -fx-background-color: 
+        linear-gradient(#e2e2e2, #c6c6c6),
+        linear-gradient(#ececec 0%, #c9c9c9 20%, #c6c6c6 100%),
+        linear-gradient(#cdcdcd 0%, #e6e6e6 50%);
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
