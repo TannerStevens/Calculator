@@ -97,7 +97,7 @@ public class Parser {
 		BufferedReader br = new BufferedReader(new FileReader(inputFile));
 		String line = null;
 		while((line = br.readLine()) != null) {
-			lineList.add(line);
+			lineList.add(translate(line));
 		}
 		br.close();
 		return lineList;
