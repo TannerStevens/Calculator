@@ -199,6 +199,7 @@ public class Driver extends Application {
     	button.setOnAction(new EventHandler<ActionEvent>() {
     		@Override
     		public void handle(ActionEvent actionEvent) {
+    			equation = equationTF.getText();
     			equation = solveEquation(equation) + "";
     			equationTF.setText(equation);
     	    	fileStatusL.setText("");
